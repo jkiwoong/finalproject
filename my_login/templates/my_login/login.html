@@ -1,0 +1,14 @@
+{% extends "my_login/base.html" %}
+{% block title %}로그인{% endblock %}
+{% block content %}
+<div class="container text-center">
+    <h1 class="display-1">로그인</h1>
+    {% if msg %}
+    <div class="alert alert-warning" role="alert">{{ msg }}</div>
+    {% endif %}    
+    <form method="post">
+        {% csrf_token %} {{ form.as_p}}
+        <button type="submit" class="btn btn-dark">로그인</button>
+    </form>
+</div>
+{% endblock %}

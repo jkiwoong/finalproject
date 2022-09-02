@@ -1,0 +1,14 @@
+{% extends "my_login/base.html" %}
+{% block title %}가입하기{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="display-1">회원 가입</h1>
+    {% if msg %}
+    <div class="alert alert-warning" role="alert">{{ msg }}</div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit" class="btn btn-dark">가입하기</button>
+    </form>
+</div>
+{% endblock %}

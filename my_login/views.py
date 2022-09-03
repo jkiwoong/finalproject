@@ -3,9 +3,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from my_login.forms import RegisterForm
 # Create your views here.
+
+@csrf_exempt
 def index(request):
     if request.user.is_authenticated is False:
         user = "Anonymous User!"
@@ -13,6 +16,7 @@ def index(request):
         user = User.objects.filter(id=request.user.id).first()
     return render(request, "my_login/index.html", {"welcome_msg": f"Hello, {user}"})
 
+@csrf_exempt
 def resister(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
@@ -30,6 +34,7 @@ def resister(request):
         form = RegisterForm()
         return render(request, "my_login/register.html", {"form": form})
 
+@csrf_exempt
 def login_view(request):
     if request.method == "POST":
         form = AuthenticationForm(request, request.POST)
@@ -47,10 +52,12 @@ def login_view(request):
         form = AuthenticationForm()
         return render(request, "my_login/login.html", {"form": form})
 
+@csrf_exempt
 def logout_view(request):
     logout(request)
     return redirect("index")
 
+@csrf_exempt
 def user_list(request):
     if request.user.is_authenticated is False:
         return redirect("login")
